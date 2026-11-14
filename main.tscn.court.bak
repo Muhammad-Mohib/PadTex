@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://cayqsdmhy3vcd"]
+
+[ext_resource type="Script" uid="uid://ba0pdij755jcb" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://d2lkubqiqeciv" path="res://ball.gd" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://ypysa0b67gtm" path="res://PadelCourt.fbx" id="2_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+size = Vector3(1, 0.4529419, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+size = Vector3(1, 0.45300293, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bjqgx"]
+size = Vector3(1, 1, 4.819458)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
+size = Vector3(1, 1, 4.819458)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ig7tw"]
+friction = 0.0
+bounce = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_ig7tw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bjqgx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjqgx"]
+
+[node name="Node3D" type="Node3D" unique_id=872983979]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1589915051]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=76921092]
+transform = Transform3D(-0.9998766, -0.015707236, -6.8658507e-10, 0, -4.371139e-08, 1, -0.015707236, 0.9998766, 4.3705995e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground1" type="Node3D" parent="." unique_id=1607252999]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground1" unique_id=321897303]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground1/StaticBody3D" unique_id=506370802]
+transform = Transform3D(10.18876, 0, 0, 0, -8.194377e-07, -2.7554119, 0, 18.746548, -1.2044288e-07, 0, -4.244412, -9.599521)
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground1/StaticBody3D" unique_id=2031447108]
+transform = Transform3D(10.18876, 0, 0, 0, -8.194377e-07, -2.715483, 0, 18.746548, -1.1869753e-07, 0, -2.819537, -9.598949)
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1415858590]
+transform = Transform3D(10.958964, 0, 0, 0, 7.2765613, 0, 0, 0, 1.2093596, 0, 2.2821903, -16.964254)
+visible = false
+mesh = SubResource("BoxMesh_bjqgx")
+
+[node name="WallBody" type="StaticBody3D" parent="MeshInstance3D" unique_id=1846203517]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/WallBody" unique_id=973512460]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=369579371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2744619, 4.5675154, -10.239128)
+
+[node name="Player" type="AnimatableBody3D" parent="." unique_id=1770967468]
+transform = Transform3D(1.7195169, 0, 0, 0, 0.010543386, -0.41827706, 0, 0.2189637, 0.020140585, 4.3611298, 8.707039, 2.8437786)
+sync_to_physics = false
+script = ExtResource("1_ig7tw")
+
+[node name="Head" type="MeshInstance3D" parent="Player" unique_id=292836074]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
+mesh = SubResource("BoxMesh_bjqgx")
+
+[node name="Head2" type="MeshInstance3D" parent="Player" unique_id=2083749620]
+transform = Transform3D(0.2691741, 0, 0, 0, 0.99999815, 0, 0, 0, 0.7999998, 0, 0, 4.277686)
+mesh = SubResource("BoxMesh_bjqgx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1873180847]
+transform = Transform3D(1, 0, 0, 0, 0.9922315, 0, 0, -1.8626451e-09, 4.8856335, 0, 0, 0)
+shape = SubResource("BoxShape3D_0xm2m")
+
+[node name="Ball" type="Node3D" parent="." unique_id=364025055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2022629, 4.2086935, -7.7896423)
+script = ExtResource("2_0xm2m")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Ball" unique_id=1968356964]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_ig7tw")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball/RigidBody3D" unique_id=589040469]
+transform = Transform3D(0.25400013, 0, 0, 0, 0.25400013, 0, 0, 0, 0.25400013, -5.5549335, 1.5240009, -10.243542)
+mesh = SubResource("SphereMesh_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball/RigidBody3D" unique_id=1100384678]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+shape = SubResource("SphereShape3D_bjqgx")
+
+[node name="Ground" type="Node3D" parent="." unique_id=1509222332]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 65.18234, 17.043015, -24.360874)
+
+[node name="PadelCourt" parent="Ground" unique_id=1305605465 instance=ExtResource("2_h2yge")]
+transform = Transform3D(-2.1855695e-07, 0, 5, 0, 5, 0, -5, 0, -2.1855695e-07, 2.7092383e-05, 0, 619.8015)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=590278357]
+transform = Transform3D(12.967316, 0, 0, 0, 1, 0, 0, 0, 6.3529215, -16.496252, -5.3795094, 4.5726814)
+shape = SubResource("BoxShape3D_bjqgx")
+
+[connection signal="body_entered" from="Ball/RigidBody3D" to="Ball" method="_on_rigid_body_3d_body_entered"]

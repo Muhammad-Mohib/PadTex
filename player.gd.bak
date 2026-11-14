@@ -1,0 +1,25 @@
+extends Node3D
+
+var PlayerRotation: Vector3
+var RotationSpeed:float = 30.0
+
+func _ready() -> void:
+	PlayerRotation = rotation
+
+func _input(event):
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			PlayerRotation.y += RotationSpeed
+		elif event.button_index == MOUSE_BUTTON_LEFT:
+			PlayerRotation.y -= RotationSpeed
+
+func _physics_process(delta: float) -> void:
+	var cursor_pos = get_viewport().get_mouse_position()
+	var camera = get_viewport().get_camera_3d()
+	var origin = camera.project_ray_origin(cursor_pos)
+	var direction = camera.project_ray_normal(cursor_pos)
+
+	var distance = 10.0
+	global_position = origin + direction * distance
+	rotation_degrees.y = PlayerRotation.y
+	#rotation = PlayerRotation

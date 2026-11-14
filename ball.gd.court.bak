@@ -1,0 +1,46 @@
+extends Node3D
+
+@export var serve_speed := 4.0      
+@export var bounce_speed := 5.0     
+@export var hit_speed := 9.0        
+@export var hit_lift := 3.0         
+@export var bat_influence := 0.9    
+@export var fall_limit := -10.0     
+
+@onready var rigid_body: RigidBody3D = $RigidBody3D
+
+var _start_position: Vector3
+var _hit_cooldown := 0.0
+
+
+func _ready() -> void:
+	_start_position = rigid_body.global_position
+	serve()
+
+
+func serve() -> void:
+	rigid_body.global_position = _start_position
+	rigid_body.angular_velocity = Vector3.ZERO
+	rigid_body.linear_velocity = Vector3(randf_range(-1.0, 1.0), 0.0, -serve_speed)
+	
+func _physics_process(delta: float) -> void:
+	_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
+	if rigid_body.global_position.y < fall_limit:
+		serve()  
+
+
+func _on_rigid_body_3d_body_entered(body: Node) -> void:
+	var v := rigid_body.linear_velocity
+	if body.get_parent().name == "Ground":
+		v.y = bounce_speed
+	elif body.name == "WallBody":
+		v.z = maxf(absf(v.z), serve_speed)
+	elif body.name == "Player":
+		if _hit_cooldown > 0.0:
+			return
+		_hit_cooldown = 0.2
+		var swing: Vector3 = body.swing_velocity.limit_length(12.0) * bat_influence
+		v = Vector3(swing.x, maxf(swing.y, 0.0) + hit_lift, -hit_speed)
+	else:
+		return
+	rigid_body.linear_velocity = v
