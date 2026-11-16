@@ -9,6 +9,7 @@ var RotationSpeed: float = 30.0
 var swing_velocity := Vector3.ZERO  
 
 var isPaused := false
+var input_locked := false  # set by the game session while menus are open
 
 @onready var PauseMenu := $CanvasGroup/Panel 
 
@@ -16,6 +17,8 @@ func _ready() -> void:
 	PlayerRotation = rotation_degrees
 
 func _input(event):
+	if input_locked:
+		return
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			PlayerRotation.y += RotationSpeed
@@ -34,7 +37,7 @@ func _input(event):
 			print("RESUME")
 
 func _physics_process(delta: float) -> void:
-	if(!isPaused):
+	if !isPaused and !input_locked:
 		var cursor_pos = get_viewport().get_mouse_position()
 		var camera = get_viewport().get_camera_3d()
 		var origin: Vector3 = camera.project_ray_origin(cursor_pos)

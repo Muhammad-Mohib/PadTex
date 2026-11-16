@@ -25,14 +25,12 @@ var _serve_timer := 0.0
 var _stall_time := 0.0
 var _rally := 0
 var _best := 0
-var _label: Label
 
 
 func _ready() -> void:
 	_gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * rigid_body.gravity_scale
 	var cs: CollisionShape3D = rigid_body.get_node("CollisionShape3D")
 	_radius = (cs.shape as SphereShape3D).radius * cs.scale.x
-	_make_label()
 	serve()
 
 
@@ -40,7 +38,6 @@ func serve() -> void:
 	_serve_timer = 0.0
 	_stall_time = 0.0
 	_rally = 0
-	_update_label()
 	var start := Vector3(court_center_x + randf_range(-8.0, 8.0), floor_y + 8.0, -62.0)
 	rigid_body.global_position = start
 	rigid_body.angular_velocity = Vector3.ZERO
@@ -89,7 +86,6 @@ func _on_rigid_body_3d_body_entered(body: Node) -> void:
 			v = _arc_to(p, Vector3(x, floor_y + _radius, land_z_far), hit_speed)
 			_rally += 1
 			_best = maxi(_best, _rally)
-			_update_label()
 		_:
 			return 
 	rigid_body.linear_velocity = v
@@ -112,16 +108,16 @@ func _near_target() -> Vector3:
 	return Vector3(x, floor_y + _radius, land_z_near)
 
 
-func _make_label() -> void:
-	var layer := CanvasLayer.new()
-	add_child(layer)
-	_label = Label.new()
-	_label.position = Vector2(16, 12)
-	_label.add_theme_font_size_override("font_size", 28)
-	layer.add_child(_label)
-	_update_label()
+func get_rally() -> int:
+	return _rally
 
 
-func _update_label() -> void:
-	if _label:
-		_label.text = "Rally: %d   Best: %d" % [_rally, _best]
+func get_best() -> int:
+	return _best
+
+
+## Called by the game session when a new player starts their turn.
+func reset_for_new_player() -> void:
+	_best = 0
+	_hit_cooldown = 0.0
+	serve()
