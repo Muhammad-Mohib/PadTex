@@ -1,6 +1,4 @@
-# Heaven Jam
-
-A small solo padel game made in Godot. Hit the ball over the net, let it bounce off the far wall, and see how long you can keep the rally going.
+A small group/solo padel game made in Godot. Hit the ball over the net, let it bounce off the far wall, and see how long you can keep the rally going.
 
 ## Controls
 
