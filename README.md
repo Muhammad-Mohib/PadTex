@@ -1,4 +1,8 @@
-A small group/solo padel game made in Godot. Hit the ball over the net, let it bounce off the far wall, and see how long you can keep the rally going.
+# Heaven Jam
+
+A padel game I made in Godot for a game jam. The theme was "Bounce Back". When I heard the theme "Bounce Back", a padel game was the first idea that came to my mind, and honestly the only one. I could already imagine how fun it would be to build a game where the whole point is the ball bouncing back to you.
+I have worked with Unity and Unreal before, but this was my first time using Godot. I knew how things should work, but I didn't know GDScript. For example, in Unity you use a Rigidbody to give an object like a ball physics and gravity, so I had to find the Godot version of that. Most of the work was reading the docs and forums to find the Godot equivalent of things I already knew from Unity.
+Honestly, I'm really proud of how it turned out. The mechanics are very simple, and that's what makes it fun. Once you start playing, you keep going for "just one more rally", a bit like Tetris. The people who playtested it at the event all loved it, and that motivated me a lot. I think if I keep working on it, it can become a really engaging game, maybe even with multiplayer. You could try the game here (https://mohibdev.itch.io/padtex)
 
 ## Controls
 
@@ -10,35 +14,18 @@ A small group/solo padel game made in Godot. Hit the ball over the net, let it b
 
 ## How to play
 
-- The ball is served from the far side and bounces once on your side.
-- Hit it with the bat to send it back over the net.
-- Swing sideways while hitting to aim left or right.
-- If the ball gets past you, the rally ends and a new serve comes.
-- Each player gets a 1-minute turn. Their best rally in that minute is their score.
+The ball is served from the far side and bounces once on your side. Hit it back over the net and keep the rally going as long as you can. Move the bat sideways while hitting to aim left or right. If the ball gets past you, a new serve comes. Each player gets 1 minute, and their best rally is their score.
+Simply, 
 
-## Playing with friends
+1. Type your name and press Start, or choose Play without name.
+2. Your time, rally and best rally are shown at the top. The leaderboard is in the top left.
+3. When the time ends, the next player enters their name. If you use the same name again, only your highest score is kept.
+4. When everyone is done, press End game & show leaderboard to see who won.
 
-1. When the game starts, type your name and press **Start** (or Enter), or choose **Play without name** to play as a guest.
-2. Your name, time left, current rally and best rally appear at the top of the screen.
-3. The leaderboard in the top-left lists every player's best score.
-4. When the minute is up, the next player enters their name. Entering a name that already exists counts as another try for that player, and only their highest score is kept.
-5. When everyone is done, choose **End game & show leaderboard** to see the final standings, then **New game** or **Quit**.
-
-Pressing Esc during a turn pauses the game and the clock.
-
-## Running the project
+## Instructions to run the Project
 
 1. Install [Godot 4.7](https://godotengine.org/download).
-2. Open Godot, click **Import**, and select `project.godot` in this folder.
-3. Press **F5** to play.
+2. Open Godot, click Import button and select project.godot in this folder.
+3. Press the play button to play.
 
-## Project files
-
-- `main.tscn`: the main scene (court, camera, bat, ball)
-- `player.gd`: bat movement and pause menu
-- `ball.gd`: serves, bounces, hits and the rally counter
-- `game_session.gd`: name entry, 1-minute turns and the leaderboard
-
-## Tweaking
-
-Select the **Ball** node and change the values in the Inspector, for example `serve_speed` and `hit_speed` to make the game faster or slower. To change the turn length, select the **GameSession** node and edit `round_seconds`.
+Made by Muhammad Mohib.
